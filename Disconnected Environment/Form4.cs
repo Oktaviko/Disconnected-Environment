@@ -63,18 +63,18 @@ namespace Disconnected_Environment
         }
         private void cbTahunMasuk()
         {
-            int y = DateTime.Now.Year - 2023;
+            int y = DateTime.Now.Year - 2010;
             string[] type = new string[y];
             int i = 0;
             for (i = 0; i < type.Length; i++)
             {
                 if (i == 0)
                 {
-                    cbxTahunMasuk.Items.Add("2023");
+                    cbxTahunMasuk.Items.Add("2010");
                 }
                 else
                 {
-                    int l = 2023 + i;
+                    int l = 2010 + i;
                     cbxTahunMasuk.Items.Add(l.ToString());
                 }
             }
@@ -82,6 +82,8 @@ namespace Disconnected_Environment
 
         private void Form4_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'disconnectedEnvironmentDataSet.mahasiswa' table. You can move, or remove it, as needed.
+            this.mahasiswaTableAdapter.Fill(this.disconnectedEnvironmentDataSet.mahasiswa);
 
         }
 
@@ -89,10 +91,10 @@ namespace Disconnected_Environment
         {
             koneksi.Open();
             string nim = "";
-            string strs = "select NIM from dbo.mahasiswa where nama_mahasiswa = @nm ";
+            string strs = "select NIM from dbo.Mahasiswa where nama_mahasiswa = @nm";
             SqlCommand cm = new SqlCommand(strs, koneksi);
             cm.CommandType = CommandType.Text;
-            cm.Parameters.Add(new SqlParameter("@nm", cbxNama.Text));   
+            cm.Parameters.Add(new SqlParameter("@nm", cbxNama.Text));
             SqlDataReader dr = cm.ExecuteReader();
             while (dr.Read())
             {
@@ -136,32 +138,32 @@ namespace Disconnected_Environment
 
             string str = "select count (*) from dbo.status_mahasiswa";
             SqlCommand cm = new SqlCommand(str, koneksi);
-            count = (int) cm.ExecuteScalar();
-            if (count == 0 )
+            count = (int)cm.ExecuteScalar();
+            if (count == 0)
             {
                 kodeStatus = "1";
             }
             else
             {
-                string queryString = "select Max(id_status) from dbo.status_mahasiswa";
+                string queryStrings = "select Max(id_status) from dbo.status_mahasiswa";
                 SqlCommand cmStatusMahasiswaSum = new SqlCommand(str, koneksi);
                 int totalStatusMahasiswa = (int)cmStatusMahasiswaSum.ExecuteScalar();
                 int finalKodeStatusInt = totalStatusMahasiswa + 1;
                 kodeStatus = Convert.ToString(finalKodeStatusInt);
             }
-            string queryStrings = "insert into dbo.status_mahasiswa (id_status, nim, " +
+            string queryString = "insert into dbo.status_mahasiswa (id_status, nim, " +
                 "status_mahasiswa, tahun_masuk)" + "values(@ids, @NIM, @sm, @tm)";
-            SqlCommand cmd = new SqlCommand(queryStrings, koneksi);
+            SqlCommand cmd = new SqlCommand(queryString, koneksi);
             cmd.CommandType = CommandType.Text;
-            
+
             cmd.Parameters.Add(new SqlParameter("ids", kodeStatus));
             cmd.Parameters.Add(new SqlParameter("NIM", nim));
             cmd.Parameters.Add(new SqlParameter("sm", statusMahasiswa));
-            cmd.Parameters.Add(new SqlParameter("sm", tahunMasuk));
+            cmd.Parameters.Add(new SqlParameter("tm", tahunMasuk));
             cmd.ExecuteNonQuery();
             koneksi.Close();
 
-            MessageBox.Show("Data berhasil disimpan", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Data Berhasil Disimpan", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
             refreshform();
             dataGridView();
         }
@@ -181,6 +183,13 @@ namespace Disconnected_Environment
         private void txtNIM_Click(object sender, EventArgs e)
         {
 
+        }
+        
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            Form1 f1 = new Form1();
+            f1.Show();
+            this.Hide();
         }
     }
 }

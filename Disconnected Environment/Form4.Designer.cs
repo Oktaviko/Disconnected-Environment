@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnOpen = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
@@ -41,7 +42,12 @@
             this.cbxStatusMahasiswa = new System.Windows.Forms.ComboBox();
             this.cbxTahunMasuk = new System.Windows.Forms.ComboBox();
             this.txtNIM = new System.Windows.Forms.Label();
+            this.disconnectedEnvironmentDataSet = new Disconnected_Environment.DisconnectedEnvironmentDataSet();
+            this.mahasiswaBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.mahasiswaTableAdapter = new Disconnected_Environment.DisconnectedEnvironmentDataSetTableAdapters.mahasiswaTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.disconnectedEnvironmentDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mahasiswaBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -165,6 +171,20 @@
             this.txtNIM.Text = "txtNIM";
             this.txtNIM.Click += new System.EventHandler(this.txtNIM_Click);
             // 
+            // disconnectedEnvironmentDataSet
+            // 
+            this.disconnectedEnvironmentDataSet.DataSetName = "DisconnectedEnvironmentDataSet";
+            this.disconnectedEnvironmentDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // mahasiswaBindingSource
+            // 
+            this.mahasiswaBindingSource.DataMember = "mahasiswa";
+            this.mahasiswaBindingSource.DataSource = this.disconnectedEnvironmentDataSet;
+            // 
+            // mahasiswaTableAdapter
+            // 
+            this.mahasiswaTableAdapter.ClearBeforeFill = true;
+            // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -183,10 +203,13 @@
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.dataGridView1);
+            this.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.mahasiswaBindingSource, "nim", true));
             this.Name = "Form4";
             this.Text = "Data Status Mahasiswa";
             this.Load += new System.EventHandler(this.Form4_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.disconnectedEnvironmentDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mahasiswaBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -207,5 +230,8 @@
         private System.Windows.Forms.ComboBox cbxStatusMahasiswa;
         private System.Windows.Forms.ComboBox cbxTahunMasuk;
         private System.Windows.Forms.Label txtNIM;
+        private DisconnectedEnvironmentDataSet disconnectedEnvironmentDataSet;
+        private System.Windows.Forms.BindingSource mahasiswaBindingSource;
+        private DisconnectedEnvironmentDataSetTableAdapters.mahasiswaTableAdapter mahasiswaTableAdapter;
     }
 }

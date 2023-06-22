@@ -24,7 +24,7 @@ namespace Disconnected_Environment
         {
             koneksi.Open();
             SqlDataAdapter dataAdapter1 = new SqlDataAdapter(new SqlCommand("Select m.nim, m.nama_mahasiswa, " +
-                "m.alamat , m.jenis_kel, m.tgl_lahir , p.nama_prodi From dbo.Mahasiswa m " +
+                "m.alamat , m.jenis_kelamin, m.tgl_lahir , p.nama_prodi From dbo.Mahasiswa m " +
                 "join dbo.prodi p on m.id_prodi = p.id_prodi", koneksi));
             DataSet ds = new DataSet();
             dataAdapter1.Fill(ds);
@@ -37,7 +37,7 @@ namespace Disconnected_Environment
             this.txtAlamat.DataBindings.Add(
                 new Binding("Text", this.customersBindingSource, "alamat", true));
             this.cbxJenisKelamin.DataBindings.Add(
-                new Binding("Text", this.customersBindingSource, "jenis_kel", true));
+                new Binding("Text", this.customersBindingSource, "jenis_kelamin", true));
             this.cbxProdi.DataBindings.Add(
                 new Binding("Text", this.customersBindingSource, "nama_prodi", true));
             this.dtTanggalLahir.DataBindings.Add(
@@ -94,7 +94,7 @@ namespace Disconnected_Environment
                 hs = int.Parse(dr["id_prodi"].ToString()); 
             }
             dr.Close();
-            string str = "insert into dbo.Mahasiswa (nim, nama_mahasiswa, jenis_kel, alamat, tgl_lahir, id_prodi) " + "values(@NIM, @Nm, @Jk, @Al, @Tgll, @Idp)";
+            string str = "insert into dbo.mahasiswa (nim, nama_mahasiswa, jenis_kelamin, alamat, tgl_lahir, id_prodi) " + "values(@NIM, @Nm, @Jk, @Al, @Tgll, @Idp)";
             SqlCommand cmd = new SqlCommand(str, koneksi);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.Add(new SqlParameter("NIM", nim));
@@ -134,7 +134,7 @@ namespace Disconnected_Environment
         public Form3()
         {
             InitializeComponent();
-            koneksi = new SqlConnection();
+            koneksi = new SqlConnection(connectionstring);
             this.bindingNavigator1.BindingSource = this.customersBindingSource;
             refreshform();
         }
